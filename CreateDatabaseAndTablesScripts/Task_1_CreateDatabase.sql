@@ -1,0 +1,8 @@
+USE master
+GO
+
+DROP DATABASE IF EXISTS DoctorWho
+GO 
+
+CREATE DATABASE DoctorWho
+GO
