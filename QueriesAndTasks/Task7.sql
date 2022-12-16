@@ -1,9 +1,6 @@
 --Create a function called fnEnemies to printout the enemies names for a given episode
-DROP FUNCTION IF EXISTS fnEnemiesNamesList
-GO
-DROP FUNCTION IF EXISTS fnEnemies
-GO
-CREATE FUNCTION fnEnemiesNamesList (@EpsoidId INT)
+
+CREATE OR ALTER FUNCTION fnEnemiesNamesList (@EpsoidId INT)
 RETURNS TABLE AS
 RETURN
 	SELECT EnemyName
@@ -12,7 +9,7 @@ RETURN
 GO
 
 
-CREATE FUNCTION fnEnemies (@EpisodeId INT)
+CREATE OR ALTER FUNCTION fnEnemies (@EpisodeId INT)
 RETURNS VARCHAR(MAX) AS
 BEGIN 
 	DECLARE @Result AS VARCHAR(MAX)
@@ -21,5 +18,5 @@ BEGIN
 	RETURN @Result
 
 END;
-
 GO
+

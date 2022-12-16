@@ -1,7 +1,5 @@
 
-DROP PROCEDURE IF EXISTS spSummariseEpisodes
-GO
-CREATE PROCEDURE spSummariseEpisodes AS
+CREATE OR ALTER PROCEDURE spSummariseEpisodes AS
 BEGIN
 	SELECT TOP 3 c.CompanionName AS [Most Frequent Companions]
 	FROM tblEpisodeCompanion e

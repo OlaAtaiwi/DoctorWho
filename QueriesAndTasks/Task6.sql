@@ -1,9 +1,6 @@
 --Create a function called fnCompanions to printout the companions names for a given episode
-DROP FUNCTION IF EXISTS fnCompanionsNamesList
-GO
-DROP FUNCTION IF EXISTS fnCompanions
-GO
-CREATE FUNCTION fnCompanionsNamesList (@EpsoidId INT)
+
+CREATE OR ALTER FUNCTION fnCompanionsNamesList (@EpsoidId INT)
 RETURNS TABLE AS
 RETURN
 	SELECT CompanionName
@@ -12,7 +9,7 @@ RETURN
 GO
 
 
-CREATE FUNCTION fnCompanions(@EpisodeId INT)
+CREATE OR ALTER FUNCTION fnCompanions(@EpisodeId INT)
 RETURNS VARCHAR(MAX) AS
 BEGIN 
 	DECLARE @Result AS VARCHAR(MAX)
