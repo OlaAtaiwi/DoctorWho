@@ -16,19 +16,10 @@ CREATE FUNCTION fnEnemies (@EpisodeId INT)
 RETURNS VARCHAR(MAX) AS
 BEGIN 
 	DECLARE @Result AS VARCHAR(MAX)
-	DECLARE @NamesTable TABLE(
-	EnemyName VARCHAR(400)
-	);
-	insert into @NamesTable 
-	SELECT * FROM fnEnemiesNamesList(@EpisodeId)
 	SELECT @Result=STRING_AGG (EnemyName,',') 
-	FROM @NamesTable;
-
+	FROM fnEnemiesNamesList(@EpisodeId);
 	RETURN @Result
 
 END;
 
 GO
-
-
-select dbo.fnEnemies(1);
