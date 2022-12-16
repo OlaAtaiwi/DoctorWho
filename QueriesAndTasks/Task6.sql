@@ -12,26 +12,21 @@ RETURN
 GO
 
 
-CREATE FUNCTION fnCompanions (@EpisodeId INT)
+CREATE FUNCTION fnCompanions(@EpisodeId INT)
 RETURNS VARCHAR(MAX) AS
 BEGIN 
 	DECLARE @Result AS VARCHAR(MAX)
-	SET @Result=''
-	DECLARE companion_cursor CURSOR FOR SELECT * FROM fnCompanionsNamesList(@EpisodeId)
-	DECLARE @CompanionName AS VARCHAR(MAX)
-	OPEN companion_cursor
-	FETCH NEXT FROM companion_cursor 
-	INTO @CompanionName 
-	WHILE @@FETCH_STATUS = 0
-		BEGIN
-			SET @Result= CONCAT(@Result, ', ', @CompanionName)
+	DECLARE @NamesTable TABLE(
+	CompanionName VARCHAR(400)
+	);
+	insert into @NamesTable 
+	SELECT * FROM fnCompanionsNamesList(@EpisodeId)
+	SELECT @Result=STRING_AGG (CompanionName,',') 
+	FROM @NamesTable;
 
-			FETCH NEXT FROM companion_cursor
-			INTO @CompanionName
-		END
-
-	CLOSE companion_cursor
-	DEALLOCATE companion_cursor
 	RETURN @Result
 
 END;
+GO
+
+select dbo.fnCompanions(1);

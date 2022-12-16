@@ -16,24 +16,19 @@ CREATE FUNCTION fnEnemies (@EpisodeId INT)
 RETURNS VARCHAR(MAX) AS
 BEGIN 
 	DECLARE @Result AS VARCHAR(MAX)
-	SET @Result=''
-	DECLARE enemy_cursor CURSOR FOR SELECT * FROM fnEnemiesNamesList(@EpisodeId)
-	DECLARE @EnemyName AS VARCHAR(MAX)
-	OPEN enemy_cursor
-	FETCH NEXT FROM enemy_cursor 
-	INTO @EnemyName 
-	WHILE @@FETCH_STATUS = 0
-		BEGIN
-			SET @Result= CONCAT(@Result, ', ', @EnemyName)
+	DECLARE @NamesTable TABLE(
+	EnemyName VARCHAR(400)
+	);
+	insert into @NamesTable 
+	SELECT * FROM fnEnemiesNamesList(@EpisodeId)
+	SELECT @Result=STRING_AGG (EnemyName,',') 
+	FROM @NamesTable;
 
-			FETCH NEXT FROM enemy_cursor
-			INTO @EnemyName
-		END
-
-	CLOSE enemy_cursor
-	DEALLOCATE enemy_cursor
 	RETURN @Result
 
 END;
 
-GO 
+GO
+
+
+select dbo.fnEnemies(1);
